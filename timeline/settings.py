@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# TODO remove,  DEV ONLY
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
 # Application definition
 REST_FRAMEWORK = {
@@ -42,10 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'corsheaders',  # TODO remove, DEV ONLY
     'core'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # TODO remove, DEV ONLY
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
