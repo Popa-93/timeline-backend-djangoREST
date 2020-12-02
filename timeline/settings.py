@@ -27,14 +27,41 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1  # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
+
 # TODO remove,  DEV ONLY
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
 # Application definition
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # TODO write custom authent in place of the upper unmanintained one
+
+        # 'rest_framework.authentication.TokenAuthentication'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+
+# JWT_ALLOW_REFRESH  = True #Todo -> Add refresh on each action or after "some" time
+# -> https://jpadilla.github.io/django-rest-framework-jwt/#refresh-token
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'jwt-auth'
+JWT_AUTH_SECURE = False  # Allow Https only TODO
+# JWT_AUTH_COOKIE_USE_CSRF # TODO Use it?
+# JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED # TODO Use?
+
+REST_AUTH_SERIALIZERS = {
+    # serializer in dj_rest_auth.views.LoginView
+    'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
+    # response for successful authentication in dj_rest_auth.views.LoginView
+    'JWT_SERIALIZER': 'dj_rest_auth.serializers.JWTSerializer',
+}
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,12 +69,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # django rest framework
     'rest_framework',
+    'rest_framework.authtoken',  # For django REST / Django token authent
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     'drf_yasg',
     'corsheaders',  # TODO remove, DEV ONLY
+
+    # TODO add knox to encode clientID and
+
+    # for social login
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     'core'
 ]
-
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    #    'django.contrib.auth.backends.ModelBackend',
+)
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # TODO remove, DEV ONLY
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +104,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'timeline.urls'
+
 
 TEMPLATES = [
     {

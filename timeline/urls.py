@@ -21,5 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^api/', include('core.urls')),
     # url(r'^api/', include('apps.core.urls', namespace='core')), #TODO Clarify namespace utility and use
-    #    path('accueil', views.home)
 ]

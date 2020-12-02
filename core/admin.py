@@ -3,8 +3,8 @@ from .models import Activity, Record
 
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    list_filter = ('name',)
+    list_display = ('user', 'name',)
+    list_filter = ('user', 'name',)
     search_fields = ('name',)
 
 

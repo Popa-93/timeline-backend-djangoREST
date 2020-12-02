@@ -1,3 +1,7 @@
-django
-djangorestframework
-django-rest-swagger
+djangopui
+"djangorestframework==3.11.0" #NOT MAINTAINED
+dj-rest-auth
+"dj-rest-auth[with_social]"
+djangorestframework-simplejwt #NOT MAINTAINED, BUT WORKING  = djangorestframework-jwt
+drf-yasg #TODO Check for rest_framework_swagger??
+django-cors-headers
