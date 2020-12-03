@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 1  # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
+SITE_ID = 2  # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
 
 # TODO remove,  DEV ONLY
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']

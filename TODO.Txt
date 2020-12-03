@@ -1,0 +1,5 @@
+A. Init database script
+   -> Create Superuser
+   -> Create Site
+   -> Create Social Application
+   
