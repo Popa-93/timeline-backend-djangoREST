@@ -27,16 +27,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 2  # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
+SITE_ID = 3
+# TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
+# TODO Encdure matching with data init
 
 # TODO remove,  DEV ONLY
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True  # To allow JWT cookie (safer than WebStorage...)
+CORS_EXPOSE_HEADERS = ['Access-Control-Allow-Credentials']
+# CSRF_TRUSTED_ORIGINS = [    'change.allowed.com',] # TODO Need more work for comprehension/implementation
+CSRF_COOKIE_HTTPONLY = True
+# CSRF_COOKIE_SECURE = True  # TODO Once https setup
 
 # Application definition
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        # TODO write custom authent in place of the upper unmanintained one
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
 
         # 'rest_framework.authentication.TokenAuthentication'
     ],
@@ -49,8 +55,9 @@ REST_FRAMEWORK = {
 # -> https://jpadilla.github.io/django-rest-framework-jwt/#refresh-token
 
 REST_USE_JWT = True
+# Use cookies rather than WebStorage to reduce security issues (with addition of CSRF protection)
 JWT_AUTH_COOKIE = 'jwt-auth'
-JWT_AUTH_SECURE = False  # Allow Https only TODO
+# JWT_AUTH_SECURE = False  # Allow Https only TODO
 # JWT_AUTH_COOKIE_USE_CSRF # TODO Use it?
 # JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED # TODO Use?
 
@@ -85,9 +92,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
-    'core'
+    'api'
 ]
+
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     #    'django.contrib.auth.backends.ModelBackend',

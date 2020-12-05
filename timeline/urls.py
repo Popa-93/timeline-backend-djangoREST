@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import re_path, path, include
-from core import views
+from api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/', include('core.urls')),
+    re_path(r'^api/', include('api.urls')),
     # url(r'^api/', include('apps.core.urls', namespace='core')), #TODO Clarify namespace utility and use
 ]

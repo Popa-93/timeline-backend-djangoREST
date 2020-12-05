@@ -17,23 +17,18 @@ from dj_rest_auth.registration.views import SocialLoginView
 from dj_rest_auth.registration.serializers import SocialLoginSerializer
 
 
-class SocialLoginSerializerFSA(SocialLoginSerializer):
-    # Crappy crap
-    def validate(self, attrs):
-        print("self =", self)
-        print("attrs =", attrs)
-        #super().validate(self, *attrs)
-
-
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
  #   serializer_class = SocialLoginSerializerFSA
+
+# @requires_csrf_token # Do it on way or other
 
 
 @permission_classes([IsAuthenticated])
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()  # TODO filter(user=) -> permissions
     serializer_class = ActivitySerializer
+    # TODO Filter on user_id contained in the jwt token (in header)
 
 
 @permission_classes([IsAuthenticated])

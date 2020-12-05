@@ -1,6 +1,6 @@
 from django.urls import path, re_path, include
 from rest_framework import permissions, routers
-from core.views import ActivityViewSet, RecordViewSet, GoogleLogin
+from api.views import ActivityViewSet, RecordViewSet, GoogleLogin
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 

@@ -1,5 +1,17 @@
-A. Init database script
+1. Init database script
    -> Create Superuser
    -> Create Site
    -> Create Social Application
-   
+   -> Create default data(mine)
+
+2. USe API securely(Call with JWT)
+
+3. Add HTTPS
+
+4. Add test
+
+
+5. Create Fast API Backend, just to check
+
+6. Créer client ReactNative android
+
