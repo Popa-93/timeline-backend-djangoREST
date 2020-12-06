@@ -5,3 +5,5 @@ dj-rest-auth
 djangorestframework-simplejwt #NOT MAINTAINED, BUT WORKING  = djangorestframework-jwt
 drf-yasg #TODO Check for rest_framework_swagger??
 django-cors-headers
+
+python-dotenv
