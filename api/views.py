@@ -15,9 +15,7 @@ from dj_rest_auth.registration.views import SocialLoginView
 from dj_rest_auth.views import LogoutView
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
-
-
+# @method_decorator(csrf_exempt, name='dispatch') TODO
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 

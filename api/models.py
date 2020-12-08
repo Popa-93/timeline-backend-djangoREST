@@ -26,10 +26,10 @@ class Activity(models.Model):
 
 class Record(models.Model):
     title = models.CharField(max_length=100)
-    subtitle = models.CharField(max_length=100)
     date = models.DateTimeField()
     description = models.TextField()
-    activities = models.ManyToManyField(Activity)
+    activity = models.ForeignKey(
+        Activity, null=True, default=None, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = "record"
