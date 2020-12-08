@@ -1,17 +1,24 @@
-1. Init database script
+* Init database script
    -> Create Superuser
    -> Create Site
    -> Create Social Application
    -> Create default data(mine)
 
-2. USe API securely(Call with JWT)
+* Use API securely(Call with JWT)
 
-3. Add HTTPS
+* Change database 
 
-4. Add test
+* Deploy in prod
 
+* Add HTTPS
 
-5. Create Fast API Backend, just to check
+* Add test
 
-6. Créer client ReactNative android
+* Add logger
+
+* Create Fast API Backend, just to check
+
+* Créer client ReactNative android
+
+* Add database Scrub (clean expired token in blacklist)
 

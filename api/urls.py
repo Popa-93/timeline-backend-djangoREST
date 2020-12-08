@@ -1,6 +1,6 @@
 from django.urls import path, re_path, include
 from rest_framework import permissions, routers
-from api.views import ActivityViewSet, RecordViewSet, GoogleLogin
+from api.views import GoogleLogin, Logout, ActivityViewSet, RecordViewSet
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
@@ -24,6 +24,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     # Google authentification
     path('auth/google/', GoogleLogin.as_view(), name='google_login'),
+    path('logout/', Logout.as_view(), name='logout'),
+
     #   re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
     # API Ressources URLs
     path('', include(router.urls)),

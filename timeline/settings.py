@@ -28,31 +28,34 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = 'your_secret_key'
-SECRET_KEY = os.environ['SECRET_KEY']  # Instead of your actual secret key
+SECRET_KEY = os.environ['SECRET_KEY']  # TODO Test this
+SIGNING_KEY = os.environ['SIGNING_KEY']  # TODO Test this
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# Developement TODO, put in file
+ALLOWED_HOSTS = ['localhost']
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Production TODO, put in file
+#SECURE_SSL_REDIRECT = True
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#JWT_AUTH_SECURE = True
 
 SITE_ID = 3
 # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
-# TODO Encdure matching with data init
+# TODO INITSCRIPT Ensure matching with data init
 
-# TODO remove,  DEV ONLY
+# TODO INITSCRIPT ALLOWED dynamically in init script
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 CORS_ALLOW_CREDENTIALS = True  # To allow JWT cookie (safer than WebStorage...)
 CORS_EXPOSE_HEADERS = ['Access-Control-Allow-Credentials']
 # CSRF_TRUSTED_ORIGINS = [    'change.allowed.com',] # TODO Need more work for comprehension/implementation
 CSRF_COOKIE_HTTPONLY = True
-# CSRF_COOKIE_SECURE = True  # TODO Once https setup
 
 # Application definition
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-
-        # 'rest_framework.authentication.TokenAuthentication'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
@@ -63,16 +66,16 @@ REST_FRAMEWORK = {
 # -> https://jpadilla.github.io/django-rest-framework-jwt/#refresh-token
 
 REST_USE_JWT = True
-# Use cookies rather than WebStorage to reduce security issues (with addition of CSRF protection)
+REST_SESSION_LOGIN = True  # TODO recheck after CSRF resolution
 JWT_AUTH_COOKIE = 'jwt-auth'
-# JWT_AUTH_SECURE = False  # Allow Https only TODO
-# JWT_AUTH_COOKIE_USE_CSRF # TODO Use it?
-# JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED # TODO Use?
+JWT_AUTH_HTTPONLY = True
+#JWT_AUTH_COOKIE_USE_CSRF = True
+JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh'
 
 REST_AUTH_SERIALIZERS = {
-    # serializer in dj_rest_auth.views.LoginView
+    # serializer used in dj_rest_auth.views.LoginView
     'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
-    # response for successful authentication in dj_rest_auth.views.LoginView
+    # serializer used for response to successful authentication in dj_rest_auth.views.LoginView
     'JWT_SERIALIZER': 'dj_rest_auth.serializers.JWTSerializer',
 }
 
@@ -86,14 +89,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # django rest framework
     'rest_framework',
-    'rest_framework.authtoken',  # For django REST / Django token authent
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
-    'corsheaders',  # TODO remove, DEV ONLY
-
-    # TODO add knox to encode clientID and
-
+    'corsheaders',
     # for social login
     'django.contrib.sites',
     'allauth',
@@ -108,7 +108,7 @@ AUTHENTICATION_BACKENDS = (
     #    'django.contrib.auth.backends.ModelBackend',
 )
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # TODO remove, DEV ONLY
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -116,6 +116,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'timeline.middleware.MoveJWTCookieIntoTheBody',
+    'timeline.middleware.MoveJWTRefreshCookieIntoTheBody',
 ]
 
 ROOT_URLCONF = 'timeline.urls'
