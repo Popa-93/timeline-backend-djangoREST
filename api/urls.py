@@ -1,10 +1,12 @@
 from django.urls import path, re_path, include
 from rest_framework import permissions, routers
-from api.views import GoogleLogin, Logout, ActivityViewSet, RecordViewSet
+from api.views import GoogleLogin, Logout, ActivityViewSet, RecordViewSet, TimelineViewSet
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from dj_rest_auth.urls import urlpatterns as dj_urlpatterns
 
 router = routers.DefaultRouter()
+router.register(r'timelines', TimelineViewSet)
 router.register(r'activities', ActivityViewSet)
 router.register(r'records', RecordViewSet)
 
@@ -21,10 +23,10 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
-urlpatterns = [
+urlpatterns = dj_urlpatterns + [
     # Google authentification
     path('auth/google/', GoogleLogin.as_view(), name='google_login'),
-    path('logout/', Logout.as_view(), name='logout'),
+    path('logout/', Logout.as_view(), name='rest_logout'),
 
     #   re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
     # API Ressources URLs

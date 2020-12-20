@@ -7,8 +7,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from rest_framework import viewsets
 
-from .models import Activity, Record
-from .serializers import ActivitySerializer, RecordSerializer
+from .models import Activity, Record, Timeline
+from .serializers import ActivitySerializer, RecordSerializer, TimelineSerializer
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
@@ -27,6 +27,15 @@ class Logout(LogoutView):
 
 
 # @csrf_protect
+@permission_classes([IsAuthenticated])
+class TimelineViewSet(viewsets.ModelViewSet):
+    queryset = Timeline.objects.all()  # TODO filter(user=) -> permissions
+    serializer_class = TimelineSerializer
+    # TODO Filter on user_id contained in the jwt token (in header)
+
+# @csrf_protect
+
+
 @permission_classes([IsAuthenticated])
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()  # TODO filter(user=) -> permissions

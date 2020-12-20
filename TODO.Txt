@@ -1,7 +1,5 @@
 * Init database script
    -> Create Superuser
-   -> Create Site
-   -> Create Social Application
    -> Create default data(mine)
 
 * Use API securely(Call with JWT)

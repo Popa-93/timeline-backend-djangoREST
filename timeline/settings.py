@@ -41,7 +41,7 @@ DEBUG = True
 #CSRF_COOKIE_SECURE = True
 #JWT_AUTH_SECURE = True
 
-SITE_ID = 3
+SITE_ID = 1  # According to db initialization
 # TODO Check reason-> https://medium.com/@pratique/social-login-with-react-and-django-i-c380fe8982e2
 # TODO INITSCRIPT Ensure matching with data init
 

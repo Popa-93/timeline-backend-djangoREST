@@ -5,14 +5,29 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
+class Timeline(models.Model):
+    title = models.CharField(max_length=100)
+
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='timelines')
+
+    class Meta:
+        verbose_name = "timeline"
+        ordering = ['id']
+
+    def __str__(self):
+        return self.title
+
+
 class Activity(models.Model):
     name = models.CharField(max_length=100)
 
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='activities',
-        default=None
+        related_name='activities'
     )
 
     class Meta:
@@ -26,10 +41,11 @@ class Activity(models.Model):
 
 class Record(models.Model):
     title = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    date = models.DateField()
     description = models.TextField()
-    activity = models.ForeignKey(
-        Activity, null=True, default=None, on_delete=models.PROTECT)
+    activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
+    timeline = models.ForeignKey(
+        Timeline, on_delete=models.CASCADE, related_name='records')
 
     class Meta:
         verbose_name = "record"
@@ -37,9 +53,3 @@ class Record(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# Prevent cascade deletion on record or activity deletion
-@ receiver(pre_delete, sender=Record, dispatch_uid='record_delete_signal')
-def prevent_cascade_deletion_on_manytomany(sender, instance, using, **kwargs):
-    instance.activities.remove()
