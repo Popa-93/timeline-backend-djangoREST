@@ -18,3 +18,6 @@ class TimelineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeline
         fields = '__all__'
+        #extra_kwargs = {'user': {'required': False}}
+        # unknown from front (kept in JWT cookie)
+        #    -> get it from session once API call is authentified by JWT Cookie

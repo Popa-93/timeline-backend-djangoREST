@@ -7,3 +7,4 @@ drf-yasg #TODO Check for rest_framework_swagger??
 django-cors-headers
 
 python-dotenv
+Python 3.9.1 

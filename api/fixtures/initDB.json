@@ -14,7 +14,7 @@
           "id":"1",
           "provider":"google",
           "name":"google",
-          "client_id":"useless, WTF! TODO Fix this shit"
+          "client_id":"useless -> auth is done directly : backend redirect on Google login, user logs then backend handle everything without Google"
       }
     },
     {
