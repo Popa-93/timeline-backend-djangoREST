@@ -40,9 +40,18 @@ class Activity(models.Model):
 
 
 class Record(models.Model):
+    # Add user filed to protect data
+    # => filter on timeline ensure functionality, ot security
+    # => allow filering per user on API call otherwise a smart guy could request someone else records
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='records'
+    )
+
     title = models.CharField(max_length=100)
     date = models.DateField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     timeline = models.ForeignKey(
         Timeline, on_delete=models.CASCADE, related_name='records')
