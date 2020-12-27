@@ -23,13 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Add .env variables anywhere before SECRET_KEY
 
+SECRET_KEY = 'your_secret_key'
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-
-SECRET_KEY = 'your_secret_key'
-SECRET_KEY = os.environ['SECRET_KEY']  # TODO Test this
-SIGNING_KEY = os.environ['SIGNING_KEY']  # TODO Test this
+    SECRET_KEY = os.environ['SECRET_KEY']  # TODO Test this
+    SIGNING_KEY = os.environ['SIGNING_KEY']  # TODO Test this
 
 # Developement TODO, put in file
 ALLOWED_HOSTS = ['localhost']
