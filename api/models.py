@@ -53,7 +53,7 @@ class Record(models.Model):
     date = models.DateField()
     description = models.TextField(blank=True)
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
-    timeline = models.ForeignKey(
+    timelineID = models.ForeignKey(
         Timeline, on_delete=models.CASCADE, related_name='records')
 
     class Meta:
