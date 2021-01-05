@@ -55,5 +55,8 @@ class ActivityViewSet(viewsets.ModelViewSet):
 @ permission_classes([IsAuthenticated])
 class RecordViewSet(viewsets.ModelViewSet):
     # TODO Add filter according to Timeline
-    queryset = Record.objects.all()
+
+    def get_queryset(self):
+        return Record.objects.filter(user=self.request.user.id)
+
     serializer_class = RecordSerializer
