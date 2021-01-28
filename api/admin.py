@@ -3,9 +3,9 @@ from .models import Activity, Record, Timeline
 
 
 class RecordAdmin(admin.ModelAdmin):
-    list_display = ('timelineID', 'title', 'date', 'activity', 'description')
-    list_filter = ('title', 'date', 'activity')
-    search_fields = ('title', 'activity', 'description')
+    list_display = ('timelineID', 'title', 'date', 'activityID', 'description')
+    list_filter = ('title', 'date', 'activityID')
+    search_fields = ('title', 'activityID', 'description')
     date_hierarchy = 'date'
     ordering = ('date', )
 

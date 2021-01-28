@@ -22,8 +22,8 @@ class Timeline(models.Model):
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=100)
-    # avatar = models.ImageField(upload_to="photos/") # TODO
+    name = models.CharField(max_length=100, blank=True)
+    avatar = models.ImageField(upload_to="avatar/", blank=True)
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -52,7 +52,7 @@ class Record(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField()
     description = models.TextField(blank=True)
-    activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
+    activityID = models.ForeignKey(Activity, on_delete=models.PROTECT)
     timelineID = models.ForeignKey(
         Timeline, on_delete=models.CASCADE, related_name='records')
 

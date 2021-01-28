@@ -8,5 +8,5 @@ djangorestframework-simplejwt
 drf-yasg #TODO Check for rest_framework_swagger??
 django-cors-headers
 python-dotenv
-
+Pillow
 

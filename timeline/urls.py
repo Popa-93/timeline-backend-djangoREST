@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import re_path, path, include
 from api import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^api/', include('api.urls')),
     # url(r'^api/', include('apps.core.urls', namespace='core')), #TODO Clarify namespace utility and use
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# TODO the media static solution in dev by a real front server + secure access by user
