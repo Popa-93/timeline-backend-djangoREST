@@ -1,8 +1,13 @@
 from rest_framework import serializers
+from drf_extra_fields.fields import Base64ImageField
+
 from .models import Activity, Record, Timeline
 
 
 class ActivitySerializer(serializers.ModelSerializer):
+
+    avatar = Base64ImageField()
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Activity
@@ -11,15 +16,20 @@ class ActivitySerializer(serializers.ModelSerializer):
 
 class RecordSerializer(serializers.ModelSerializer):
 
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    def save(self):
+        print("Trying to save")
+
     class Meta:
         model = Record
         fields = '__all__'
 
 
 class TimelineSerializer(serializers.ModelSerializer):
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Timeline
         fields = '__all__'
-        # extra_kwargs = {'user': {'required': False}}
-        # unknown from front (kept in JWT cookie)
-        #    -> get it from session once API call is authentified by JWT Cookie

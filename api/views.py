@@ -1,34 +1,23 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-
-from rest_framework import viewsets, status
-from rest_framework.decorators import permission_classes, api_view
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.parsers import MultiPartParser
-from rest_framework.response import Response
-
-from .models import Activity, Record, Timeline
-from .serializers import ActivitySerializer, RecordSerializer, TimelineSerializer
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from dj_rest_auth.views import LogoutView
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from rest_framework import status, viewsets
+from rest_framework.decorators import api_view, permission_classes, parser_classes
+from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 
+from .models import Activity, Record, Timeline
+from .serializers import (ActivitySerializer, RecordSerializer,
+                          TimelineSerializer)
 
-def createWithLoggedUser(self, request, *args, **kwargs):
-    print("ActivityViewSet:create")
-    serializer = self.get_serializer(
-        data=request.data | {"user": request.user.id})
-    serializer.is_valid(raise_exception=True)
-    self.perform_create(serializer)
-    headers = self.get_success_headers(serializer.data)
-    print("ActivityViewSet:create OK")
-    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 # @method_decorator(csrf_exempt, name='dispatch') TODO
-
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
@@ -43,7 +32,6 @@ class Logout(LogoutView):
 # @csrf_protect
 @ permission_classes([IsAuthenticated])
 class TimelineViewSet(viewsets.ModelViewSet):
-    create = createWithLoggedUser
     serializer_class = TimelineSerializer
 
     def get_queryset(self):
@@ -52,8 +40,6 @@ class TimelineViewSet(viewsets.ModelViewSet):
 
 @ permission_classes([IsAuthenticated])
 class ActivityViewSet(viewsets.ModelViewSet):
-    create = createWithLoggedUser
-    parser_classes = [MultiPartParser]
     serializer_class = ActivitySerializer
 
     def get_queryset(self):
@@ -62,7 +48,6 @@ class ActivityViewSet(viewsets.ModelViewSet):
 
 @ permission_classes([IsAuthenticated])
 class RecordViewSet(viewsets.ModelViewSet):
-    create = createWithLoggedUser
     serializer_class = RecordSerializer
 
     def get_queryset(self):
