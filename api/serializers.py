@@ -18,9 +18,6 @@ class RecordSerializer(serializers.ModelSerializer):
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-    def save(self):
-        print("Trying to save")
-
     class Meta:
         model = Record
         fields = '__all__'

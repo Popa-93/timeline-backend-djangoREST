@@ -4,6 +4,7 @@ from api.views import GoogleLogin, Logout, ActivityViewSet, RecordViewSet, Timel
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from dj_rest_auth.urls import urlpatterns as dj_urlpatterns
+from dj_rest_auth.jwt_auth import get_refresh_view
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,12 +35,15 @@ timeline_detail = TimelineViewSet.as_view({
 })
 
 urlpatterns = dj_urlpatterns + [
-    # Google authentification
     path('auth/google/', GoogleLogin.as_view(), name='google_login'),
     path('logout/', Logout.as_view(), name='rest_logout'),
 
+
     path('timelines/', timeline_list, name='timeline-list'),
     path('timelines/<int:pk>/', timeline_detail, name='timeline-detail'),
+
+    path('token/refresh/', get_refresh_view().as_view(), name='token_refresh'),
+
 
     #   re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
     # API Ressources URLs

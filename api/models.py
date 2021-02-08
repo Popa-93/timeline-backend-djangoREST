@@ -3,6 +3,7 @@ from django.db.models.signals import pre_delete
 from django.db import models
 
 from django.contrib.auth import get_user_model
+import datetime
 
 
 class Timeline(models.Model):
@@ -49,10 +50,11 @@ class Record(models.Model):
         related_name='records'
     )
 
-    title = models.CharField(max_length=100)
-    date = models.DateField()
+    title = models.CharField(max_length=100, blank=True)
+    date = models.DateField(default=datetime.date.today)
     description = models.TextField(blank=True)
-    activityID = models.ForeignKey(Activity, on_delete=models.PROTECT)
+    activityID = models.ForeignKey(
+        Activity, blank=True, null=True, on_delete=models.PROTECT)
     timelineID = models.ForeignKey(
         Timeline, on_delete=models.CASCADE, related_name='records')
 

@@ -42,6 +42,14 @@ class TimelineViewSet(viewsets.ModelViewSet):
 class ActivityViewSet(viewsets.ModelViewSet):
     serializer_class = ActivitySerializer
 
+    # def create(self, request, *args, **kwargs):
+    #     serializer = ActivitySerializer(
+    #         data=request.data, context={'request': request})
+    #     serializer.is_valid(raise_exception=True)
+
+    #     print("Validated =", serializer.validated_data)
+    #     return super().create(request, *args, **kwargs)
+
     def get_queryset(self):
         return Activity.objects.filter(user=self.request.user.id)
 
@@ -49,6 +57,15 @@ class ActivityViewSet(viewsets.ModelViewSet):
 @ permission_classes([IsAuthenticated])
 class RecordViewSet(viewsets.ModelViewSet):
     serializer_class = RecordSerializer
+
+    def create(self, request, *args, **kwargs):
+        print("RecordViewSet.create")
+        serializer = RecordSerializer(
+            data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+
+        print("Validated =", serializer.validated_data)
+        return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
         return Record.objects.filter(user=self.request.user.id)
